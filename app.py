@@ -1,4 +1,6 @@
+from models import create_hash
 from flask import Flask, app, render_template, redirect,request
+from models import create_hash,revoke
 
 app=Flask(__name__)
 
@@ -6,10 +8,14 @@ app=Flask(__name__)
 def index():
     if(request.method=='POST'):
         url=request.form.get('url')
-        return(render_template('shorten.html',url=url))
+        hash=create_hash(url)
+        return(render_template('shorten.html',url=hash))
     return(render_template('index.html'))
 @app.route('/<id>',methods=['GET'])
-def revoke(id):
-    return("<h1>Success</h1>")
-    
+def open(id):
+    print(id)
+    url=revoke(id)
+    if(url != "create new"):
+        return(redirect(url))
+    return(redirect('/'))    
 app.run(debug=True)
