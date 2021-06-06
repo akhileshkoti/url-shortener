@@ -6,7 +6,7 @@ app=Flask(__name__)
 def index():
     if(request.method=='POST'):
         url=request.form.get('url')
-        return(render_template('index.html',))
+        return(render_template('shorten.html',url=url))
     return(render_template('index.html'))
 @app.route('/<id>',methods=['GET'])
 def revoke(id):
